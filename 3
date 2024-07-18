@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int main() {
+    int p;
+    printf("Введіть кількість розрядів p: ");
+    scanf("%d", &p);
+    
+    if (p <= 0 || p > 30) {
+        printf("p повинно бути в межах від 1 до 30.\n");
+        return 1;
+    }
+
+    long long dp[4];
+    long long next_dp[4];
+
+    dp[0] = 1;
+    dp[1] = 0;
+    dp[2] = 1;
+    dp[3] = 0;
+
+    for (int i = 2; i <= p; i++) {
+        next_dp[0] = dp[2] + dp[3];
+        next_dp[1] = dp[0];
+        next_dp[2] = dp[0] + dp[1];
+        next_dp[3] = dp[2];
+
+        for (int j = 0; j < 4; j++) {
+            dp[j] = next_dp[j];
+        }
+    }
+
+    long long result = dp[0] + dp[1] + dp[2] + dp[3];
+    printf("Кількість чисел із %d розрядів: %lld\n", p, result);
+
+    return 0;
+}
