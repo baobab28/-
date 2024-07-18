@@ -1,1 +1,29 @@
-ва
+#include <stdio.h>
+
+double time_to_eat_cake(int times[], int n) {
+    double combined_rate = 0.0;
+    
+    for(int i = 0; i < n; i++) {
+        combined_rate += 1.0 / times[i];
+    }
+
+    double total_time = 1.0 / combined_rate;
+    
+    return total_time;
+}
+
+int main() {
+    int n = 3;
+    int times[n];
+
+    printf("Введите время t1, t2, t3 через пробел: ");
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &times[i]);
+    }
+
+    double result = time_to_eat_cake(times, n);
+
+    printf("Гости разом могут съесть пирог за: %.2f часов\n", result);
+    
+    return 0;
+}
