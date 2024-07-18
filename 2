@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int gcd(int a, int b) {
+    while (b != 0) {
+        int t = b;
+        b = a % b;
+        a = t;
+    }
+    return a;
+}
+
+int lcm(int a, int b) {
+    return (a / gcd(a, b)) * b;
+}
+
+int lcm_array_recursive(int arr[], int n) {
+    if (n == 1) {
+        return arr[0];
+    }
+    return lcm(arr[0], lcm_array_recursive(arr + 1, n - 1));
+}
+
+int main() {
+    int p;
+
+    printf("Введіть кількість чисел p: ");
+    scanf("%d", &p);
+
+    if (p < 2 || p > 20) {
+        printf("Кількість чисел повинна бути від 2 до 20.\n");
+        return 1;
+    }
+
+    int numbers[p];
+
+    printf("Введіть %d натуральних чисел через пробіл: ", p);
+    for (int i = 0; i < p; i++) {
+        scanf("%d", &numbers[i]);
+    }
+
+    int result = lcm_array_recursive(numbers, p);
+
+    printf("Найменше спільне кратне: %d\n", result);
+
+    return 0;
+}
