@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <limits.h>
+
+#define MAX_Y 1000000000
+
+int dp[MAX_Y + 1];
+
+int min_steps_recursive(int x, int y) {
+    if (x >= y) {
+        return x - y;
+    }
+    if (dp[y] != -1) {
+        return dp[y];
+    }
+
+    int steps;
+    if (y % 2 == 0) {
+        steps = 1 + min_steps_recursive(x, y / 2);
+    } else {
+        steps = 1 + min_steps_recursive(x, y + 1);
+    }
+
+    dp[y] = steps;
+    return steps;
+}
+
+int main() {
+    int x, y;
+    
+    printf("Введіть значення x та y через пробіл (0 <= x <= y < 2^31): ");
+    scanf("%d %d", &x, &y);
+
+    if (x < 0 || x > y || y > MAX_Y) {
+        printf("Некоректні вхідні дані.\n");
+        return 1;
+    }
+
+    for (int i = 0; i <= y; i++) {
+        dp[i] = -1;
+    }
+    dp[x] = 0;
+
+    int result = min_steps_recursive(x, y);
+    printf("Мінімальна кількість кроків для досягнення %d з %d: %d\n", y, x, result);
+    
+    return 0;
+}
